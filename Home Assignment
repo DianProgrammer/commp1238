@@ -1,0 +1,133 @@
+--Q1.List all the rectangles
+--First way :
+
+Select id, x, y, width,height,color
+from rectangles
+
+--Second way : 
+Select *
+from rectangles
+
+--Q2.How many rectangles are there?
+--Ans: There are 17 Rectangles.
+
+select COUNT (*)
+from rectangles
+
+--Q3.What color is the widest rectangle?
+--Ans. The color of widest rectangle is #abcdef.
+
+select color,MAX(width)
+from rectangles
+
+
+--Q4.What color is the tallest rectangle?
+--Ans. The color of the rallest rectangle is #ffffff.
+
+select color,MAX(height)
+from rectangles
+
+--Q5.List all rectangles that are wider than they are tall
+
+select width,height
+from rectangles
+where width>height
+
+--Q6.Calculate and select area of each rectangle
+
+select width,height, (height*width) as area
+from rectangles
+
+--Q7.What color is the largest rectangle?
+--Ans. The color of largest rectangle by area is #ffffff.
+
+select width,height, MAX(height*width) as area, color
+from rectangles
+
+--Q8.What color is the rectangle that extends the most to the right?
+--Ans. The color of the rectangle that extends the most to the right is #ffffff.
+
+select color, MAX(x+width),MAX(y+height)
+from rectangles
+
+--Q9.Find rectangle(s) with NULL color
+--We do not have any rectangle with NULL color.
+
+select *
+from rectangles
+where color LIKE NULL
+
+--Q10.List all the different colors
+
+select DISTINCT color
+from rectangles
+
+--Q11.List all the different named colors
+--Ans. red / blue / green / yellow / purple / orange / pink
+
+select DISTINCT color
+from rectangles
+WHERE color is not NULL AND color not like '#%';
+
+--Q12.List rectangle colors in upper case letters
+
+select UPPER(color)
+from rectangles
+
+--Q13.What is the course_id of the course with the longest name?
+--Ans.Introduction To Full-Stack Development / Mathematics for Computer Technology II / Web Application Development Using Java
+
+SELECT course_name, LENGTH(course_name) AS course_length
+FROM courses
+WHERE LENGTH(course_name) = (SELECT MAX(LENGTH(course_name)) FROM courses);
+
+--Q14.How many assignments are there with due dates in 2024?
+--Ans.There are 12 assignments with due dates in 2024.
+
+SELECT COUNT(*)
+from assignments
+where due_date like '2024-%-%'
+
+--Q15.Concatenate Course ID and name:
+
+SELECT CONCAT('"' , course_id, ':' , course_name, '"')
+FROM courses;
+
+--Q16.List courses with Labs on Mondays:
+
+SELECT course_id,course_name,lab_time
+FROM courses
+where lab_time like 'Mon%';
+
+--Q17.Past Assignments:
+
+SELECT title,due_date
+FROM assignments
+where due_date < '2024-11-25';
+
+--Q18.How many assignments are there for each course:
+
+SELECT title,COUNT(*) AS 'Assignments for each course'
+FROM assignments
+GROUP BY course_id
+
+--Bonus tasks
+--Q1.List the number of assignments per semester
+
+SELECT semester, COUNT(*) as 'Number of assignments per semester'
+FROM courses
+GROUP BY semester
+
+--Q2.Show the red component of all the RGB colors
+
+SELECT *,SUBSTRING(color, 2, 2) AS red_component
+FROM rectangles
+WHERE color LIKE '#%';
+
+
+
+
+
+
+
+
